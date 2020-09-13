@@ -1,0 +1,52 @@
+﻿@model Catalogo.Models.Products
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Seller</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeLivro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nomeLivro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.dataPub)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dataPub)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.isbn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.isbn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeAutor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nomeAutor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.precoLivro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.precoLivro)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to list</a>
+</div>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Catalogo.Models.Products>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Products</h1>
+    <p>Add products to bag:</p>
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        @* Mudar a cor da THead *@
+        <tr class="success">
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nomeLivro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dataPub)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isbn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nomeAutor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precoLivro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        // Para colocar o conteudo na tabela
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nomeLivro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dataPub)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nomeAutor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precoLivro)
+            </td>
+            <td>
+                <a asp-action="AddToCart" asp-route-id="@item.id">Add</a>
+                <a asp-action="Details" asp-route-id="@item.id">Details</a>
+
+            </td>
+        </tr>
+
+        }
+    </tbody>
+
+</table>
