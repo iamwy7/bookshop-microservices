@@ -1,0 +1,53 @@
+# Recurso do K8s, para configurar como e o que subir no POD.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+# Confs do meu Deployment
+spec:
+# Precisamos dele para que o service possa ser linkado.
+  selector:
+    matchLabels: # Dados de identificação no K8s
+      app: mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo
+# Confs do meu container no POD.
+    spec:
+      containers:
+      - name: bookshop-mongo
+        image: mongo:4.4.0-bionic
+        ports:
+        - containerPort: 27017
+        env:
+          - name: MONGO_INITDB_DATABASE
+            value: "Produtos"
+          - name: MONGO_NON_ROOT_USERNAME
+            value: "Produtos"         
+          - name: MONGO_NON_ROOT_PASSWORD
+            value: "secret"         
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: "root"         
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: "T5r4e3t1ps9"         
+
+---
+# O Recurso no qual o K8s te dá, para que você acesse um POD, já que não vai conseguir acessá-lo diretamente.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+  labels:
+    app: mongo-service
+    role: master
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  # É esse cara que linka o Service ao POD.
+  selector:
+    app: mongo

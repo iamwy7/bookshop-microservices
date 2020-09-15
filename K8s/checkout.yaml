@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+spec:
+  selector:
+    matchLabels:
+      app: checkout
+
+  template:
+    metadata:
+      labels:
+        app: checkout
+    spec:
+      containers:
+        - name: bookshop-checkout
+          image: wy7images/microservices-bookshop:checkout
+          ports:
+            - containerPort: 80
+          env:
+            - name: urlApi
+              value: "http://api-service/Produtos"
+            - name: conRabbitMQ
+              value: "amqp://wy7:rabbitmq@rabbitmq-service:5672/"              
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkout-service
+  labels:
+    app: checkout-service
+spec:
+  type: LoadBalancer # Gera um IP no cloud provider se possivel, fora isso, vai nos gerar um IP interno (ClusterIP), com uma porta alta aleatória(NodePort).
+  ports: # Mas no caso, essa porta, é para as requests dentro do cluster.
+    - protocol: TCP
+      port: 80
+  selector:
+    app: checkout

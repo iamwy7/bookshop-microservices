@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-payment
+spec:
+  selector:
+    matchLabels:
+      app: order-payment
+
+  template:
+    metadata:
+      labels:
+        app: order-payment
+    spec:
+      containers:
+        - name: bookshop-order-payment
+          image: wy7images/microservices-bookshop:order
+          ports:
+            - containerPort: 5672 # Não precisa de porta essa imagem, afinal ela é uma console application, mas é a porta que ele vai usar para conectar no RabbitMQ.
+          env:
+            - name: conRabbitMQ
+              value: "amqp://wy7:rabbitmq@rabbitmq-service:5672/"  
+            - name: conRedis
+              value: "redis-service,port: 6379,password=T5r4e3t1ps9!"            
+            - name: OrderMode
+              value: "payment_queue"  
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-payment-service
+  labels:
+    app: order-payment-service
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 5672
+  selector:
+    app: order-payment

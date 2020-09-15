@@ -1,0 +1,55 @@
+# Descritivo de como, e o que subir no POD.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+# Confs do meu Deployment
+spec:
+# Precisamos dele para que o service possa ser linkado.
+  selector:
+    matchLabels: # Dados de identificação no K8s
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+# Confs do meu container no POD.    
+    spec:
+      containers:
+        - name: bookshop-rabbitmq
+          image: "rabbitmq:3-management"
+          ports:
+            - containerPort: 15672
+            - containerPort: 5672
+          env:
+            - name: RABBITMQ_ERLANG_COOKIE
+              value: "OJSJBREFSGCJXBXEDJAL"
+            - name: RABBITMQ_DEFAULT_USER
+              value: "wy7"
+            - name: RABBITMQ_DEFAULT_PASS
+              value: "rabbitmq"
+            - name: RABBITMQ_DEFAULT_VHOST
+              value: "/"
+
+---
+# O Recurso no qual o K8s te dá, para que você acesse um POD, já que não vai conseguir acessá-lo diretamente.
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-service
+  labels:
+    app: rabbitmq-service
+spec:
+  type: LoadBalancer # Gera um IP no cloud provider se possivel, fora isso, vai nos gerar um IP interno (ClusterIP), com uma porta alta aleatória(NodePort).
+  ports: # Mas no caso, essas portas aqui, são para as requests dentro do cluster.
+    - name: http
+      protocol: TCP
+      port: 15672 
+    - name: amqp
+      protocol: TCP
+      port: 5672
+# É esse cara que linka o Service ao POD.
+  selector:
+    app: rabbitmq

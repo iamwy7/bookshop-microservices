@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment
+spec:
+  selector:
+    matchLabels:
+      app: payment
+
+  template:
+    metadata:
+      labels:
+        app: payment
+    spec:
+      containers:
+        - name: bookshop-payment
+          image: wy7images/microservices-bookshop:payment
+          ports:
+            - containerPort: 5672
+          env:
+            - name: conRabbitMQ
+              value: "amqp://wy7:rabbitmq@rabbitmq-service:5672/"  
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  labels:
+    app: payment-service
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 5672
+  selector:
+    app: payment

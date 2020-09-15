@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  selector:
+    matchLabels:
+      app: api
+
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: wy7images/microservices-bookshop:api
+          ports:
+            - containerPort: 80
+          env:
+            - name: conMongoDB
+              value: "mongodb://root:T5r4e3t1ps9@mongo-service:27017"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  labels:
+    app: api-service
+spec:
+  type: NodePort # Gera um IP interno no cluster (ClusterIP), e uma porta configurada abaixo, para uso exclusivo de acesso EXTERNO. Para acesso interno, só confiar no DNS do Kube, sem porta, que ta tudo certo.
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30080 
+  selector:
+    app: api

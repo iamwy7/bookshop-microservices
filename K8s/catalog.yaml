@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+spec:
+  selector:
+    matchLabels:
+      app: catalog
+
+  template:
+    metadata:
+      labels:
+        app: catalog
+    spec:
+      containers:
+        - name: bookshop-catalog
+          image: wy7images/microservices-bookshop:catalog
+          ports:
+            - containerPort: 80
+          env:
+            - name: urlApi
+              value: "http://api-service/Produtos"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-service
+  labels:
+    app: catalog-service
+spec:
+  type: LoadBalancer # Gera um IP no cloud provider se possivel, fora isso, vai nos gerar um IP interno (ClusterIP), com uma porta alta aleatória(NodePort).
+  ports: # Mas no caso, essa porta, é para as requests dentro do cluster.
+    - protocol: TCP
+      port: 80
+  selector:
+    app: catalog
