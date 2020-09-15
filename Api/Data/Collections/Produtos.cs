@@ -22,7 +22,7 @@ namespace Api.Data.Collections
             NomeLivro = nomeLivro;
             DataPub = dataPub;
             ISBN = isbn;
-            NomeAutor = nomeLivro;
+            NomeAutor = nomeAutor;
             PrecoLivro = precoLivro;
         }
         
