@@ -1,4 +1,4 @@
-# Microservices-BookShop :tw-1f4da:
+# Microservices-BookShop 
 Esse projeto é meu primeiro em arquitetura de microservices, e é um sistema fake de checkout de pedido de uma loja ( no caso, de livros ) baseado no conteúdo do canal [Fullcycle](https://www.youtube.com/channel/UCMUoZehUZBhLb8XaTc8TQrA "Fullcycle") do youtube, paralelamente também as empresas [School of net](https://www.schoolofnet.com/ "School of net") e a [Code.Education](https://code.education/ "Code.Education").
 
 O Intuito é adquirir experiência com arquitetura de microservices, em um estudo de caso atual,  com tecnologias atuais.
@@ -7,10 +7,10 @@ Essa é a arquitetura, o que ela usa, e como ela se comunica:
 
 [![Microservices-Bookshop](https://i.imgur.com/QLjPZy2.png "Microservices-Bookshop")](https://i.imgur.com/QLjPZy2.png "Microservices-Bookshop")
 
-## ATTENTION :tw-26a0:
+## ATTENTION 
 Os sistemas são bem simples, bem simples meeeeeeeesmo, somente o essencial pro fluxo de checkout funcionar, feitos em dotnet Core. Lembrando, é para adquirir experiência com a arquitetura, e as tecnologias.
 
-## How to run :tw-1f680: 
+## How to run 
 Todo o ambiente foi feito no Docker/Kubernetes.
 Temos os arquivos descritivos dos Deployments, para você rodar no seu minikube.
 Atualmente as imagens docker apontam para o meu perfil no hub.docker, fica a seu critério trocar :)
@@ -23,7 +23,7 @@ Atualmente as imagens docker apontam para o meu perfil no hub.docker, fica a seu
 	"Turtles All the Way Down",
 	"dataPub": "2017-08-10",
 	"isbn": 9788551002001
-	"NomeAutor": -"John Green",
+	"NomeAutor": "John Green",
 	"PrecoLivro": 26.72
 }
 ```
@@ -39,6 +39,6 @@ Atualmente as imagens docker apontam para o meu perfil no hub.docker, fica a seu
 
 7- O Order atualiza o status do pedido no Redis, e se aprovado, envia para os outros microservices possíveis seguintes.
 
-Bem Tranquilo :tw-1f604:
+Bem Tranquilo :D
 
 
