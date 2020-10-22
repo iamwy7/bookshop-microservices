@@ -20,7 +20,7 @@ Atualmente as imagens docker apontam para o meu perfil no hub.docker, fica a seu
 
 ```json
 {
-	"Turtles All the Way Down",
+	"nomeLivro": "Turtles All the Way Down",
 	"dataPub": "2017-08-10",
 	"isbn": 9788551002001
 	"NomeAutor": "John Green",
